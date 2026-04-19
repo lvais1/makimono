@@ -97,26 +97,86 @@
     "spicy_mayo": "Spicy Mayo"
   },
   "rolls": {
-    "salmon_classic": { "name": "Classic Salmon Roll", "desc": "A timeless duo — fresh salmon with crisp cucumber, wrapped in perfectly seasoned sushi rice." },
-    "spicy_tuna": { "name": "Spicy Tuna Roll", "desc": "Bold, fiery tuna with a creamy kick of spicy mayo. The one you'll be reaching for all night." },
-    "shrimp_tempura": { "name": "Shrimp Tempura Roll", "desc": "Crispy tempura shrimp with creamy avocado — a delightful contrast of textures." },
-    "eel_roll": { "name": "Unagi Cucumber Roll", "desc": "Sweet, caramelized eel with cool cucumber and a drizzle of rich eel sauce." },
-    "salmon_avocado": { "name": "Salmon & Avocado", "desc": "Buttery salmon meets creamy avocado — a classic pairing that never disappoints." },
-    "scallop_mango": { "name": "Scallop Mango Roll", "desc": "Delicate scallop with sweet tropical mango — an elegant, refreshing combination." },
-    "avocado_cucumber": { "name": "Avocado Cucumber Roll", "desc": "Simple, pure, and refreshing. The roll that proves less is truly more." },
-    "sweet_potato": { "name": "Sweet Potato Roll", "desc": "Roasted sweet potato with creamy avocado — comforting, slightly sweet, and utterly satisfying." },
-    "asparagus_sesame": { "name": "Asparagus Sesame Roll", "desc": "Tender asparagus with toasted sesame — clean flavors that feel like a breath of fresh air." },
-    "veggie_crunch": { "name": "Veggie Crunch Roll", "desc": "A rainbow of fresh vegetables with a satisfying crunch in every single bite." },
-    "edamame": { "name": "Edamame Roll", "desc": "Creamy edamame with avocado and a sprinkle of sesame — unexpectedly delicious." },
-    "dragon": { "name": "Dragon Roll", "desc": "A legendary roll — shrimp tempura inside, luscious avocado draped over top like dragon scales." },
-    "rainbow": { "name": "Rainbow Roll", "desc": "A stunning array of colorful fish layered on top — a true feast for the eyes and palate." },
-    "volcano": { "name": "Volcano Roll", "desc": "Baked spicy salmon bubbling on top, creating a dramatic and irresistible flavor explosion." },
-    "caterpillar": { "name": "Caterpillar Roll", "desc": "Eel and cucumber inside, cascading avocado slices on top — as beautiful as it is delicious." },
-    "spicy_salmon_cream": { "name": "Spicy Salmon Dream", "desc": "Salmon and cream cheese with a spicy kick — indulgent, rich, and absolutely addictive." },
-    "slim_salmon": { "name": "Slim Salmon Roll", "desc": "Light, clean salmon with fresh vegetables and a zesty ponzu — your guilt-free pleasure." },
-    "tuna_light": { "name": "Light Tuna Avocado", "desc": "Pure, clean tuna with creamy avocado — minimal and magnificent." },
-    "california_light": { "name": "Light California", "desc": "The classic, lightened up — fresh, simple, and crowd-pleasing every time." },
-    "fresh_garden": { "name": "Fresh Garden Roll", "desc": "A vibrant medley of garden vegetables — fresh, crunchy, and surprisingly satisfying." },
+    "salmon_classic": {
+      "name": "Classic Salmon Roll",
+      "desc": "A timeless duo — fresh salmon with crisp cucumber, wrapped in perfectly seasoned sushi rice."
+    },
+    "spicy_tuna": {
+      "name": "Spicy Tuna Roll",
+      "desc": "Bold, fiery tuna with a creamy kick of spicy mayo. The one you'll be reaching for all night."
+    },
+    "shrimp_tempura": {
+      "name": "Shrimp Tempura Roll",
+      "desc": "Crispy tempura shrimp with creamy avocado — a delightful contrast of textures."
+    },
+    "eel_roll": {
+      "name": "Unagi Cucumber Roll",
+      "desc": "Sweet, caramelized eel with cool cucumber and a drizzle of rich eel sauce."
+    },
+    "salmon_avocado": {
+      "name": "Salmon & Avocado",
+      "desc": "Buttery salmon meets creamy avocado — a classic pairing that never disappoints."
+    },
+    "scallop_mango": {
+      "name": "Scallop Mango Roll",
+      "desc": "Delicate scallop with sweet tropical mango — an elegant, refreshing combination."
+    },
+    "avocado_cucumber": {
+      "name": "Avocado Cucumber Roll",
+      "desc": "Simple, pure, and refreshing. The roll that proves less is truly more."
+    },
+    "sweet_potato": {
+      "name": "Sweet Potato Roll",
+      "desc": "Roasted sweet potato with creamy avocado — comforting, slightly sweet, and utterly satisfying."
+    },
+    "asparagus_sesame": {
+      "name": "Asparagus Sesame Roll",
+      "desc": "Tender asparagus with toasted sesame — clean flavors that feel like a breath of fresh air."
+    },
+    "veggie_crunch": {
+      "name": "Veggie Crunch Roll",
+      "desc": "A rainbow of fresh vegetables with a satisfying crunch in every single bite."
+    },
+    "edamame": {
+      "name": "Edamame Roll",
+      "desc": "Creamy edamame with avocado and a sprinkle of sesame — unexpectedly delicious."
+    },
+    "dragon": {
+      "name": "Dragon Roll",
+      "desc": "A legendary roll — shrimp tempura inside, luscious avocado draped over top like dragon scales."
+    },
+    "rainbow": {
+      "name": "Rainbow Roll",
+      "desc": "A stunning array of colorful fish layered on top — a true feast for the eyes and palate."
+    },
+    "volcano": {
+      "name": "Volcano Roll",
+      "desc": "Baked spicy salmon bubbling on top, creating a dramatic and irresistible flavor explosion."
+    },
+    "caterpillar": {
+      "name": "Caterpillar Roll",
+      "desc": "Eel and cucumber inside, cascading avocado slices on top — as beautiful as it is delicious."
+    },
+    "spicy_salmon_cream": {
+      "name": "Spicy Salmon Dream",
+      "desc": "Salmon and cream cheese with a spicy kick — indulgent, rich, and absolutely addictive."
+    },
+    "slim_salmon": {
+      "name": "Slim Salmon Roll",
+      "desc": "Light, clean salmon with fresh vegetables and a zesty ponzu — your guilt-free pleasure."
+    },
+    "tuna_light": {
+      "name": "Light Tuna Avocado",
+      "desc": "Pure, clean tuna with creamy avocado — minimal and magnificent."
+    },
+    "california_light": {
+      "name": "Light California",
+      "desc": "The classic, lightened up — fresh, simple, and crowd-pleasing every time."
+    },
+    "fresh_garden": {
+      "name": "Fresh Garden Roll",
+      "desc": "A vibrant medley of garden vegetables — fresh, crunchy, and surprisingly satisfying."
+    },
     "sauces": {
       "soy": "Soy Sauce",
       "spicy_mayo": "Spicy Mayo",
@@ -214,18 +274,54 @@
       "hard": "Hard"
     },
     "empty": "No completed challenges yet. Pick one and go!",
-    "no_rice": { "title": "Rice-Free Roll", "desc": "Make a delicious roll without using any rice. Cucumber wraps? Lettuce rolls? Get creative!" },
-    "three_textures": { "title": "Triple Texture", "desc": "Create a roll that features exactly 3 different textures — crunchy, soft, and creamy all in one." },
-    "rainbow": { "title": "Rainbow Roll", "desc": "Make the most visually stunning, colorful roll you can. Eat with your eyes first!" },
-    "minimalist": { "title": "The Minimalist", "desc": "Use a maximum of 3 ingredients total. Prove that simplicity is the ultimate sophistication." },
-    "crunchy": { "title": "Crunch Time", "desc": "Make a roll where every bite has that satisfying crunch — panko, tempura, or anything crispy!" },
-    "five_ingredients": { "title": "The Fantastic Five", "desc": "Use exactly 5 ingredients — no more, no less. Precision is part of the challenge." },
-    "new_sauce": { "title": "New Sauce Adventure", "desc": "Use a sauce you've never tried with sushi before. Miso? Tahini? Teriyaki? Surprise yourselves!" },
-    "inside_out": { "title": "Inside Out (Uramaki)", "desc": "Master the inside-out technique — rice on the outside, nori on the inside. A classic challenge!" },
-    "mirror": { "title": "Mirror Rolls", "desc": "Each of you makes the exact same roll independently. Compare your results — who nailed it?" },
-    "restaurant": { "title": "Restaurant Dupe", "desc": "Recreate your favorite sushi restaurant roll from memory. No peeking at the menu!" },
-    "blind_tasting": { "title": "Blind Tasting", "desc": "Rate each other's rolls without knowing the ingredients. Can you guess what's inside?" },
-    "speed_roll": { "title": "Speed Roll", "desc": "Set a timer for 10 minutes. Make as many rolls as you can. Ready, set, roll!" }
+    "no_rice": {
+      "title": "Rice-Free Roll",
+      "desc": "Make a delicious roll without using any rice. Cucumber wraps? Lettuce rolls? Get creative!"
+    },
+    "three_textures": {
+      "title": "Triple Texture",
+      "desc": "Create a roll that features exactly 3 different textures — crunchy, soft, and creamy all in one."
+    },
+    "rainbow": {
+      "title": "Rainbow Roll",
+      "desc": "Make the most visually stunning, colorful roll you can. Eat with your eyes first!"
+    },
+    "minimalist": {
+      "title": "The Minimalist",
+      "desc": "Use a maximum of 3 ingredients total. Prove that simplicity is the ultimate sophistication."
+    },
+    "crunchy": {
+      "title": "Crunch Time",
+      "desc": "Make a roll where every bite has that satisfying crunch — panko, tempura, or anything crispy!"
+    },
+    "five_ingredients": {
+      "title": "The Fantastic Five",
+      "desc": "Use exactly 5 ingredients — no more, no less. Precision is part of the challenge."
+    },
+    "new_sauce": {
+      "title": "New Sauce Adventure",
+      "desc": "Use a sauce you've never tried with sushi before. Miso? Tahini? Teriyaki? Surprise yourselves!"
+    },
+    "inside_out": {
+      "title": "Inside Out (Uramaki)",
+      "desc": "Master the inside-out technique — rice on the outside, nori on the inside. A classic challenge!"
+    },
+    "mirror": {
+      "title": "Mirror Rolls",
+      "desc": "Each of you makes the exact same roll independently. Compare your results — who nailed it?"
+    },
+    "restaurant": {
+      "title": "Restaurant Dupe",
+      "desc": "Recreate your favorite sushi restaurant roll from memory. No peeking at the menu!"
+    },
+    "blind_tasting": {
+      "title": "Blind Tasting",
+      "desc": "Rate each other's rolls without knowing the ingredients. Can you guess what's inside?"
+    },
+    "speed_roll": {
+      "title": "Speed Roll",
+      "desc": "Set a timer for 10 minutes. Make as many rolls as you can. Ready, set, roll!"
+    }
   },
   "journal": {
     "title": "Sushi Journal",
@@ -283,5 +379,33 @@
     "of": "of",
     "stars": "stars",
     "more": "More"
+  },
+  "welcome": {
+    "title": "Welcome",
+    "subtitle": "Create a shared couple space, or join one",
+    "createTitle": "New space",
+    "createDesc": "Start fresh and share the link with your partner",
+    "joinTitle": "I have a link",
+    "joinDesc": "Paste a link you received to join",
+    "pasteLink": "Paste link or token",
+    "join": "Join",
+    "back": "Back",
+    "invalidLink": "Invalid link",
+    "linkNotFound": "No space found for this link",
+    "spaceCreated": "Space created",
+    "joinedSpace": "Joined space"
+  },
+  "join": {
+    "connecting": "Connecting to space..."
+  },
+  "share": {
+    "title": "Invite link",
+    "desc": "Send this link to your partner to share this space",
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "copyToken": "Copy token",
+    "leaveSpace": "Leave space",
+    "leaveConfirm": "Leave this space? You can rejoin with the link.",
+    "loading": "Loading data..."
   }
 }

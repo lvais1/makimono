@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.103.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.408.0",
+    "nanoid": "^5.1.9",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",

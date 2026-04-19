@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './providers'
 import { AppLayout } from '@/components/layout/AppLayout'
+import { SpaceGate } from '@/components/layout/SpaceGate'
+import { loadSpaceBootstrap } from '@/lib/actions/space'
 
 export const metadata: Metadata = {
   title: 'Makimono | מאקימונו',
@@ -9,7 +11,11 @@ export const metadata: Metadata = {
   icons: { icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍣</text></svg>" },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const dynamic = 'force-dynamic'
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const bootstrap = await loadSpaceBootstrap()
+
   return (
     <html lang="he" dir="rtl" suppressHydrationWarning>
       <head>
@@ -18,7 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          <AppLayout>{children}</AppLayout>
+          <SpaceGate bootstrap={bootstrap}>
+            <AppLayout hasSpace={!!bootstrap}>{children}</AppLayout>
+          </SpaceGate>
         </Providers>
       </body>
     </html>

@@ -5,6 +5,7 @@ import { Save, AlertTriangle, Moon, Sun } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/context'
 import { useStore } from '@/lib/store'
 import { PageHeader } from '@/components/shared/PageHeader'
+import { ShareSpace } from '@/components/shared/ShareSpace'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import type { Language, Theme } from '@/types'
@@ -51,6 +52,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8 animate-fade-in max-w-xl">
       <PageHeader emoji="⚙️" title={t('settings.title')} />
+
+      <ShareSpace />
 
       {/* User Names */}
       <section className="card p-6 space-y-5">

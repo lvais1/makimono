@@ -46,19 +46,6 @@ export function I18nProvider({
 }) {
   const [language, setLanguageState] = useState<Language>(defaultLanguage)
 
-  useEffect(() => {
-    const saved = localStorage.getItem('makimono-v1')
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved)
-        const lang = parsed?.state?.settings?.language as Language
-        if (lang && ['he', 'en', 'ru'].includes(lang)) {
-          setLanguageState(lang)
-        }
-      } catch {}
-    }
-  }, [])
-
   const dir = language === 'he' ? 'rtl' : 'ltr'
 
   useEffect(() => {
