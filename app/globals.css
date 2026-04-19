@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 30% 98%;
+    --foreground: 220 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 12%;
+    --primary: 349 55% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 32 25% 93%;
+    --secondary-foreground: 220 25% 20%;
+    --muted: 32 20% 94%;
+    --muted-foreground: 32 10% 50%;
+    --accent: 158 28% 42%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 32 18% 88%;
+    --input: 32 18% 88%;
+    --ring: 349 55% 52%;
+    --radius: 0.75rem;
+    --sidebar-bg: 222 47% 11%;
+    --sidebar-fg: 32 25% 88%;
+    --sidebar-border: 222 35% 18%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 32 20% 88%;
+    --card: 222 40% 12%;
+    --card-foreground: 32 20% 88%;
+    --primary: 349 55% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 32% 18%;
+    --secondary-foreground: 32 20% 80%;
+    --muted: 222 32% 18%;
+    --muted-foreground: 32 10% 55%;
+    --accent: 158 28% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 60%;
+    --border: 222 28% 22%;
+    --input: 222 28% 22%;
+    --ring: 349 55% 60%;
+    --sidebar-bg: 222 50% 7%;
+    --sidebar-fg: 32 20% 85%;
+    --sidebar-border: 222 38% 15%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :lang(he) {
+    font-family: 'Inter', 'Arial Hebrew', 'Noto Sans Hebrew', Arial, sans-serif;
+  }
+
+  :lang(ru) {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-card rounded-2xl border border-border shadow-card;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium px-5 py-2.5 text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-secondary text-secondary-foreground font-medium px-5 py-2.5 text-sm transition-all hover:bg-border active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-muted-foreground font-medium px-4 py-2 text-sm transition-all hover:bg-muted hover:text-foreground active:scale-95;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-destructive text-destructive-foreground font-medium px-5 py-2.5 text-sm transition-all hover:opacity-90 active:scale-95;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all;
+  }
+
+  .textarea {
+    @apply w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all resize-none;
+  }
+
+  .select {
+    @apply w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-easy {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-medium {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+
+  .badge-hard {
+    @apply badge bg-red-100 text-red-700;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all;
+    color: hsl(var(--sidebar-fg) / 0.65);
+  }
+  .sidebar-link:hover {
+    background-color: rgb(255 255 255 / 0.08);
+    color: hsl(var(--sidebar-fg));
+  }
+
+  .sidebar-link-active {
+    background-color: rgb(255 255 255 / 0.12);
+    color: hsl(var(--sidebar-fg));
+  }
+
+  .star {
+    @apply text-2xl cursor-pointer transition-transform hover:scale-110 select-none;
+  }
+
+  .star-filled {
+    @apply text-amber-400;
+  }
+
+  .star-empty {
+    @apply text-muted;
+  }
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); }
+
+/* RTL adjustments */
+[dir="rtl"] .rtl-flip { transform: scaleX(-1); }
