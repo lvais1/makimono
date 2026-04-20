@@ -61,6 +61,8 @@ const config: Config = {
         'slide-in': 'slideIn 0.25s ease-out',
         'scale-in': 'scaleIn 0.2s ease-out',
         'bounce-in': 'bounceIn 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)',
+        'float': 'float 3s ease-in-out infinite',
+        'pop': 'pop 0.15s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -85,11 +87,23 @@ const config: Config = {
           '70%': { transform: 'translate3d(0, -4px, 0)' },
           '90%': { transform: 'translate3d(0, -2px, 0)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+        pop: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.12)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
       boxShadow: {
         card: '0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04)',
-        'card-hover': '0 4px 12px rgba(0,0,0,0.08), 0 16px 32px rgba(0,0,0,0.06)',
+        'card-hover': '0 6px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06)',
         glow: '0 0 0 3px hsl(var(--ring) / 0.2)',
+        'primary-glow': '0 0 0 3px hsl(var(--primary) / 0.15), 0 4px 16px hsl(var(--primary) / 0.25)',
+        'destructive-glow': '0 4px 12px hsl(var(--destructive) / 0.3)',
+        'focus-ring': '0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring))',
       },
     },
   },
