@@ -1,35 +1,51 @@
-import { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+'use client'
+
+// components/shared/StatCard.tsx
+// Glassmorphism stat card with count-up animation and floating emoji.
+// Replace the existing StatCard with this one.
+
+import { useCountUp } from '@/lib/hooks/useCountUp'
+import { GlassCard } from './GlassCard'
 
 interface StatCardProps {
-  label: string
-  value: string | number
   emoji: string
-  sub?: string
+  label: string
+  value: number | string
+  /** Animation delay in ms so cards stagger nicely */
+  delay?: number
   accent?: boolean
-  className?: string
 }
 
-export function StatCard({ label, value, emoji, sub, accent, className }: StatCardProps) {
+export function StatCard({ emoji, label, value, delay = 0, accent = false }: StatCardProps) {
+  const count = useCountUp(value, 1400, delay)
+
   return (
-    <div
-      className={cn(
-        'card p-5 flex flex-col gap-2 transition-all hover:shadow-card-hover',
-        accent && 'border-primary/20 bg-gradient-to-br from-card to-primary/5',
-        className
-      )}
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-2xl">{emoji}</span>
-        {accent && (
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-        )}
+    <GlassCard className="p-5 text-center select-none" hover>
+      {/* Floating emoji */}
+      <div
+        className="text-3xl mb-3 float"
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        {emoji}
       </div>
-      <div>
-        <div className="text-3xl font-bold text-foreground leading-none">{value}</div>
-        {sub && <div className="text-xs text-muted-foreground mt-1">{sub}</div>}
+
+      {/* Animated value */}
+      <div
+        className="gradient-text font-display"
+        style={{
+          fontFamily: '"Cormorant Garamond", Georgia, serif',
+          fontSize: 48,
+          fontWeight: 600,
+          lineHeight: 1,
+        }}
+      >
+        {count}
       </div>
-      <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{label}</div>
-    </div>
+
+      {/* Label */}
+      <div className="mt-2 text-xs font-medium tracking-widest uppercase text-muted-foreground">
+        {label}
+      </div>
+    </GlassCard>
   )
 }

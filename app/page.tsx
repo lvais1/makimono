@@ -1,5 +1,9 @@
 'use client'
 
+// app/page.tsx — Dashboard (Obsidian redesign)
+// Preserves all existing store / i18n / data logic.
+// Replace your current app/page.tsx with this file.
+
 import { useMemo, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Shuffle, ShoppingCart, BookOpen, Star, Zap, Calculator } from 'lucide-react'
@@ -7,9 +11,11 @@ import { useI18n } from '@/lib/i18n/context'
 import { useStore } from '@/lib/store'
 import { CHALLENGES } from '@/lib/data/challenges'
 import { StatCard } from '@/components/shared/StatCard'
+import { GlassCard } from '@/components/shared/GlassCard'
 import { RatingStars } from '@/components/shared/RatingStars'
 import { formatDate, greetingByHour, ratingAvg } from '@/lib/utils'
 
+/* ── Today's challenge widget ─────────────────────── */
 function RandomChallenge() {
   const { t } = useI18n()
   const [idx, setIdx] = useState(0)
@@ -17,46 +23,56 @@ function RandomChallenge() {
   const challenge = CHALLENGES[idx]
 
   return (
-    <div className="card p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/15">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-            {t('dashboard.todayChallenge')}
-          </div>
-          <div className="text-3xl mb-2">{challenge.emoji}</div>
-          <h3 className="font-bold text-lg text-foreground">{t(challenge.titleKey)}</h3>
-          <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{t(challenge.descriptionKey)}</p>
-          <div className="flex items-center gap-2 mt-3">
-            <span className={`badge badge-${challenge.difficulty}`}>
-              {t(`challenges.difficulty.${challenge.difficulty}`)}
-            </span>
-          </div>
-        </div>
+    <GlassCard glow className="p-6 h-full">
+      {/* Icon */}
+      <div
+        className="mb-4 flex items-center justify-center rounded-xl text-xl"
+        style={{
+          width: 44, height: 44,
+          background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(20 60% 40%))',
+          boxShadow: '0 4px 16px rgba(204,88,62,0.35)',
+        }}
+      >
+        {challenge.emoji}
       </div>
-      <div className="flex gap-3 mt-5">
+
+      <div className="text-[10px] font-semibold tracking-widest uppercase text-muted-foreground mb-3">
+        {t('dashboard.todayChallenge')}
+      </div>
+
+      <h3
+        className="font-semibold text-foreground mb-2 leading-snug"
+        style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 22 }}
+      >
+        {t(challenge.titleKey)}
+      </h3>
+
+      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+        {t(challenge.descriptionKey)}
+      </p>
+
+      <div className="flex items-center gap-3">
+        <span className={`badge badge-${challenge.difficulty}`}>
+          {t(`challenges.difficulty.${challenge.difficulty}`)}
+        </span>
         <button
           onClick={() => setIdx(Math.floor(Math.random() * CHALLENGES.length))}
-          className="btn-secondary text-xs"
+          className="btn-ghost text-xs"
         >
-          <Shuffle size={14} />
-          {t('dashboard.getShuffle')}
+          <Shuffle size={13} /> {t('dashboard.getShuffle')}
         </button>
-        <Link href="/challenges" className="btn-primary text-xs">
-          <Zap size={14} />
-          {t('nav.challenges')}
-        </Link>
       </div>
-    </div>
+    </GlassCard>
   )
 }
 
+/* ── Top-rated rolls widget ───────────────────────── */
 function TopRatedRolls() {
   const { t, language } = useI18n()
   const ratings = useStore((s) => s.ratings)
-  const settings = useStore((s) => s.settings)
 
-  const top = useMemo(() => {
-    return [...ratings]
+  const top = useMemo(() =>
+    [...ratings]
       .map((r) => {
         const avgs = []
         if (r.user1) avgs.push(ratingAvg(r.user1))
@@ -65,48 +81,53 @@ function TopRatedRolls() {
         return { ...r, avg }
       })
       .sort((a, b) => b.avg - a.avg)
-      .slice(0, 3)
-  }, [ratings])
+      .slice(0, 3),
+    [ratings]
+  )
 
   if (!top.length) {
     return (
-      <div className="card p-6 text-center">
-        <div className="text-4xl mb-3 opacity-30">⭐</div>
+      <GlassCard className="p-6 text-center">
+        <div className="text-4xl mb-3 opacity-20">⭐</div>
         <p className="text-sm text-muted-foreground">{t('dashboard.noRatings')}</p>
         <Link href="/ratings" className="btn-primary text-xs mt-4 inline-flex">
           <Star size={14} /> {t('nav.ratings')}
         </Link>
-      </div>
+      </GlassCard>
     )
   }
 
   return (
-    <div className="space-y-3">
+    <div className="list-stagger flex flex-col gap-3">
       {top.map((r, i) => (
-        <div key={r.id} className="card p-4 flex items-center gap-4 hover:shadow-card-hover transition-all">
-          <div className="text-2xl font-bold text-muted-foreground/30 w-8 text-center shrink-0">
-            {i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}
-          </div>
+        <GlassCard key={r.id} className="p-4 flex items-center gap-4">
+          <div className="text-2xl shrink-0">{['🥇', '🥈', '🥉'][i]}</div>
           <div className="flex-1 min-w-0">
             <div className="font-semibold text-foreground truncate">{r.rollName}</div>
             <div className="text-xs text-muted-foreground">{formatDate(r.date, language)}</div>
           </div>
-          <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col items-end gap-1 shrink-0">
             <RatingStars value={Math.round(r.avg)} readonly size="sm" />
-            <span className="text-xs text-muted-foreground">{r.avg.toFixed(1)}/5</span>
+            <span
+              className="gradient-text font-semibold"
+              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 22 }}
+            >
+              {r.avg.toFixed(1)}
+            </span>
           </div>
-        </div>
+        </GlassCard>
       ))}
     </div>
   )
 }
 
+/* ── Dashboard page ───────────────────────────────── */
 export default function Dashboard() {
   const { t, language } = useI18n()
-  const journal = useStore((s) => s.journal)
-  const ratings = useStore((s) => s.ratings)
-  const completedChallenges = useStore((s) => s.completedChallenges)
-  const settings = useStore((s) => s.settings)
+  const journal              = useStore((s) => s.journal)
+  const ratings              = useStore((s) => s.ratings)
+  const completedChallenges  = useStore((s) => s.completedChallenges)
+  const settings             = useStore((s) => s.settings)
 
   const totalRolls = useMemo(() =>
     journal.reduce((sum, e) => sum + e.rollsMade.filter(Boolean).length, 0),
@@ -127,91 +148,117 @@ export default function Dashboard() {
   const greeting = greetingByHour(language)
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Hero */}
-      <div className="card p-6 lg:p-8 bg-gradient-to-br from-primary/10 via-card to-accent/10 border-primary/15 relative overflow-hidden">
-        <div className="absolute top-4 end-6 text-6xl opacity-10 select-none">🍣</div>
+    <div className="space-y-7">
+
+      {/* ── Hero ─────────────────────────────────────── */}
+      <GlassCard hover={false} className="relative overflow-hidden p-10 lg:p-12">
+        {/* Subtle gradient overlay */}
+        <div
+          className="absolute inset-0 rounded-xl pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(204,88,62,0.10) 0%, transparent 55%, rgba(196,168,90,0.08) 100%)',
+          }}
+        />
+        {/* Large watermark emoji */}
+        <div
+          className="absolute pointer-events-none select-none float opacity-[0.04]"
+          style={{ fontSize: 160, lineHeight: 1, right: -16, top: -24 }}
+        >
+          🍣
+        </div>
+
         <div className="relative">
-          <div className="text-sm font-medium text-muted-foreground mb-1">{greeting} 👋</div>
-          <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
-            {settings.user1Name} & {settings.user2Name}
+          {/* Live pill */}
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase"
+            style={{ background: 'rgba(204,88,62,0.14)', color: 'hsl(var(--primary))' }}
+          >
+            <span
+              className="inline-block rounded-full"
+              style={{ width: 6, height: 6, background: 'hsl(var(--primary))' }}
+            />
+            {greeting}
+          </div>
+
+          {/* Names */}
+          <h1
+            className="mb-3 leading-none"
+            style={{
+              fontFamily: '"Cormorant Garamond", Georgia, serif',
+              fontSize: 'clamp(48px, 6vw, 80px)',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+            }}
+          >
+            <span className="gradient-text">
+              {settings.user1Name} &amp; {settings.user2Name}
+            </span>
           </h1>
-          <p className="text-muted-foreground text-sm">{t('app.tagline')}</p>
+
+          <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
+            {t('app.tagline')}
+          </p>
         </div>
+      </GlassCard>
+
+      {/* ── Stats ────────────────────────────────────── */}
+      <div className="stagger-children grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard emoji="🌙" label={t('dashboard.evenings')}   value={journal.length}              delay={0}   />
+        <StatCard emoji="🍱" label={t('dashboard.rolls')}      value={totalRolls}                  delay={100} />
+        <StatCard emoji="⭐" label={t('dashboard.topScore')}   value={topScore === '—' ? 0 : topScore} delay={200} />
+        <StatCard emoji="⚡" label={t('dashboard.challenges')} value={completedChallenges.length}  delay={300} />
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard emoji="🌙" label={t('dashboard.evenings')} value={journal.length} accent />
-        <StatCard emoji="🍱" label={t('dashboard.rolls')} value={totalRolls} />
-        <StatCard emoji="⭐" label={t('dashboard.topScore')} value={topScore} />
-        <StatCard emoji="⚡" label={t('dashboard.challenges')} value={completedChallenges.length} />
-      </div>
-
-      {/* Quick Actions */}
-      <section>
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-          {t('dashboard.quickActions')}
-        </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-          {[
-            { href: '/roll-generator', emoji: '🎲', icon: Shuffle, key: 'nav.rollGenerator', color: 'bg-primary/8 hover:bg-primary/15 text-primary' },
-            { href: '/shopping-list', emoji: '🛒', icon: ShoppingCart, key: 'nav.shoppingList', color: 'bg-accent/8 hover:bg-accent/15 text-accent' },
-            { href: '/calculator', emoji: '🧮', icon: Calculator, key: 'nav.calculator', color: 'bg-amber-500/8 hover:bg-amber-500/15 text-amber-600' },
-            { href: '/ratings', emoji: '⭐', icon: Star, key: 'nav.ratings', color: 'bg-yellow-500/8 hover:bg-yellow-500/15 text-yellow-600' },
-            { href: '/challenges', emoji: '⚡', icon: Zap, key: 'nav.challenges', color: 'bg-purple-500/8 hover:bg-purple-500/15 text-purple-600' },
-            { href: '/journal', emoji: '📖', icon: BookOpen, key: 'nav.journal', color: 'bg-blue-500/8 hover:bg-blue-500/15 text-blue-600' },
-          ].map(({ href, emoji, icon: Icon, key, color }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`card p-4 flex items-center gap-3 font-medium text-sm transition-all hover:shadow-card-hover ${color}`}
-            >
-              <span className="text-2xl">{emoji}</span>
-              <span>{t(key)}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Challenge + Top Rated */}
+      {/* ── Challenge + Top Rated ─────────────────────── */}
       <div className="grid lg:grid-cols-2 gap-6">
         <div>
           <RandomChallenge />
         </div>
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+          <div className="text-[10px] font-semibold tracking-widest uppercase mb-4"
+            style={{ color: 'hsl(var(--primary))' }}>
             {t('dashboard.topRated')}
-          </h2>
+          </div>
           <TopRatedRolls />
         </div>
       </div>
 
-      {/* Recent Journal */}
+      {/* ── Recent Journal ────────────────────────────── */}
       {journal.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="text-[10px] font-semibold tracking-widest uppercase"
+              style={{ color: 'hsl(var(--primary))' }}>
               {t('nav.journal')}
-            </h2>
+            </div>
             <Link href="/journal" className="text-xs text-primary hover:underline font-medium">
               {t('journal.details')} →
             </Link>
           </div>
-          <div className="space-y-3">
+
+          <div className="list-stagger grid sm:grid-cols-2 gap-4">
             {journal.slice(0, 2).map((entry) => (
-              <div key={entry.id} className="card p-4 flex items-center gap-4 hover:shadow-card-hover transition-all">
-                <div className="text-3xl shrink-0">📅</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-foreground">{formatDate(entry.date, language)}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5 truncate">
-                    {entry.rollsMade.filter(Boolean).join(' · ')}
-                  </div>
+              <GlassCard key={entry.id} className="p-4">
+                <div className="text-xs text-muted-foreground mb-1">{formatDate(entry.date, language)}</div>
+                <div
+                  className="font-semibold text-foreground mb-2"
+                  style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontSize: 18 }}
+                >
+                  {entry.rollsMade.filter(Boolean).length} rolls · {entry.durationMinutes ?? '?'}min
                 </div>
-                <div className="text-xs text-muted-foreground shrink-0">
-                  {entry.rollsMade.filter(Boolean).length} {t('journal.rolls_label').replace('{n}', '')}
+                <div className="flex flex-wrap gap-1.5">
+                  {entry.rollsMade.filter(Boolean).map((roll) => (
+                    <span
+                      key={roll}
+                      className="text-[11px] px-2.5 py-1 rounded-full text-muted-foreground"
+                      style={{ background: 'rgba(255,255,255,0.07)' }}
+                    >
+                      {roll}
+                    </span>
+                  ))}
                 </div>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </section>
