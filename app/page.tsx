@@ -251,8 +251,8 @@ export default function Dashboard() {
                   {entry.rollsMade.filter(Boolean).map((roll) => (
                     <span
                       key={roll}
-                      className="text-[11px] px-2.5 py-1 rounded-full text-muted-foreground"
-                      style={{ background: 'rgba(255,255,255,0.07)' }}
+                      className="text-[11px] px-2.5 py-1 rounded-full text-foreground/80 border border-white/10"
+                      style={{ background: 'rgba(255,255,255,0.13)' }}
                     >
                       {roll}
                     </span>

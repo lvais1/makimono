@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Trash2, CalendarDays, Clock, ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus, Trash2, CalendarDays, Clock, ChevronDown, ChevronUp, Pencil } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/context'
 import { useStore } from '@/lib/store'
 import { PageHeader } from '@/components/shared/PageHeader'
@@ -10,10 +10,11 @@ import { formatDate, getTodayISO, cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import type { JournalEntry } from '@/types'
 
-function EntryForm({ initial, onSave, onClose }: {
+function EntryForm({ initial, onSave, onClose, mode = 'add' }: {
   initial?: Partial<JournalEntry>
   onSave: (e: Omit<JournalEntry, 'id'>) => void
   onClose: () => void
+  mode?: 'add' | 'edit'
 }) {
   const { t } = useI18n()
   const [date, setDate] = useState(initial?.date ?? getTodayISO())
@@ -36,7 +37,9 @@ function EntryForm({ initial, onSave, onClose }: {
   return (
     <div className="card p-6 space-y-4 animate-slide-up">
       <div className="flex items-center justify-between">
-        <h3 className="font-bold text-foreground">{t('journal.add')}</h3>
+        <h3 className="font-bold text-foreground">
+          {mode === 'edit' ? t('common.edit') : t('journal.add')}
+        </h3>
         <button onClick={onClose} className="btn-ghost text-xs">{t('common.cancel')}</button>
       </div>
 
@@ -90,7 +93,7 @@ function EntryForm({ initial, onSave, onClose }: {
       </div>
 
       <button onClick={handleSave} className="btn-primary w-full">
-        <CalendarDays size={16} /> {t('journal.save')}
+        <CalendarDays size={16} /> {mode === 'edit' ? t('common.save') : t('journal.save')}
       </button>
     </div>
   )
@@ -98,9 +101,28 @@ function EntryForm({ initial, onSave, onClose }: {
 
 function JournalCard({ entry }: { entry: JournalEntry }) {
   const { t, language } = useI18n()
-  const { deleteJournalEntry } = useStore()
+  const { deleteJournalEntry, updateJournalEntry } = useStore()
   const [expanded, setExpanded] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [editing, setEditing] = useState(false)
+
+  const handleEdit = (e: Omit<JournalEntry, 'id'>) => {
+    updateJournalEntry(entry.id, e)
+    setEditing(false)
+  }
+
+  if (editing) {
+    return (
+      <div className="mb-6">
+        <EntryForm
+          initial={entry}
+          onSave={handleEdit}
+          onClose={() => setEditing(false)}
+          mode="edit"
+        />
+      </div>
+    )
+  }
 
   const rollCount = entry.rollsMade.filter(Boolean).length
 
@@ -146,12 +168,20 @@ function JournalCard({ entry }: { entry: JournalEntry }) {
             </div>
           </div>
 
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="p-2 rounded-xl hover:bg-muted text-muted-foreground transition-colors shrink-0"
-          >
-            {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            <button
+              onClick={() => setEditing(true)}
+              className="p-2 rounded-xl hover:bg-muted text-muted-foreground transition-colors"
+            >
+              <Pencil size={14} />
+            </button>
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="p-2 rounded-xl hover:bg-muted text-muted-foreground transition-colors"
+            >
+              {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+          </div>
         </div>
 
         {/* Rolls */}

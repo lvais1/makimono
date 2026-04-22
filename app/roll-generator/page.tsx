@@ -31,12 +31,14 @@ function MatchBadge({ score }: { score: number }) {
 function RollCard({ roll }: { roll: GeneratedRoll }) {
   const { t } = useI18n()
   const { saveRoll, removeSavedRoll, savedRolls } = useStore()
-  const isSaved = savedRolls.some((r) => r.id === roll.id)
+  // Match by recipeId+style because after DB save the roll's id changes to the DB UUID
+  const savedEntry = savedRolls.find((r) => r.recipeId === roll.recipeId && r.style === roll.style)
+  const isSaved = !!savedEntry
   const [imgError, setImgError] = useState(false)
 
   const toggleSave = () => {
-    if (isSaved) {
-      removeSavedRoll(roll.id)
+    if (isSaved && savedEntry) {
+      removeSavedRoll(savedEntry.id)
       toast(t('common.delete'))
     } else {
       saveRoll(roll)
@@ -189,6 +191,11 @@ export default function RollGeneratorPage() {
       return
     }
 
+    if (availableIngredients.length === 0) {
+      toast.info(t('rollGenerator.noResults'))
+      return
+    }
+
     const matching = ROLLS.filter((r) => r.style === selectedStyle)
       .map((recipe) => {
         const all = [...recipe.requiredIngredients, ...recipe.optionalIngredients]
@@ -197,8 +204,14 @@ export default function RollGeneratorPage() {
         const score = all.length > 0 ? has.length / all.length : 1
         return { recipe, score, missing, has }
       })
+      .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 4)
+
+    if (!matching.length) {
+      toast.info(t('rollGenerator.noResults'))
+      return
+    }
 
     const results: GeneratedRoll[] = matching.map(({ recipe, score, missing, has }) => ({
       id: generateId(),
@@ -215,7 +228,6 @@ export default function RollGeneratorPage() {
     }))
 
     setGenerated(results)
-    if (!results.length) toast.info(t('rollGenerator.noResults'))
   }
 
   return (

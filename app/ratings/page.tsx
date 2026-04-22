@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Plus, Trash2, Star } from 'lucide-react'
+import { Plus, Trash2, Star, Pencil } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/context'
 import { useStore } from '@/lib/store'
 import { PageHeader } from '@/components/shared/PageHeader'
@@ -13,14 +13,18 @@ import type { RollRating } from '@/types'
 
 type UserRatings = { taste: number; appearance: number; creativity: number }
 
-function RatingForm({ onClose }: { onClose: () => void }) {
+function RatingForm({ onClose, initial, mode = 'add' }: {
+  onClose: () => void
+  initial?: RollRating
+  mode?: 'add' | 'edit'
+}) {
   const { t } = useI18n()
-  const { addRating, settings } = useStore()
-  const [rollName, setRollName] = useState('')
-  const [date, setDate] = useState(getTodayISO())
-  const [notes, setNotes] = useState('')
-  const [user1, setUser1] = useState<UserRatings>({ taste: 0, appearance: 0, creativity: 0 })
-  const [user2, setUser2] = useState<UserRatings>({ taste: 0, appearance: 0, creativity: 0 })
+  const { addRating, updateRating, settings } = useStore()
+  const [rollName, setRollName] = useState(initial?.rollName ?? '')
+  const [date, setDate] = useState(initial?.date ?? getTodayISO())
+  const [notes, setNotes] = useState(initial?.notes ?? '')
+  const [user1, setUser1] = useState<UserRatings>(initial?.user1 ?? { taste: 0, appearance: 0, creativity: 0 })
+  const [user2, setUser2] = useState<UserRatings>(initial?.user2 ?? { taste: 0, appearance: 0, creativity: 0 })
 
   const handleSave = () => {
     if (!rollName.trim()) { toast.error(t('ratings.rollName')); return }
@@ -31,7 +35,11 @@ function RatingForm({ onClose }: { onClose: () => void }) {
       user1: user1.taste > 0 ? user1 : undefined,
       user2: user2.taste > 0 ? user2 : undefined,
     }
-    addRating(r)
+    if (mode === 'edit' && initial?.id) {
+      updateRating(initial.id, r)
+    } else {
+      addRating(r)
+    }
     toast.success(t('ratings.save'))
     onClose()
   }
@@ -58,7 +66,9 @@ function RatingForm({ onClose }: { onClose: () => void }) {
   return (
     <div className="card p-6 space-y-5 animate-slide-up">
       <div className="flex items-center justify-between">
-        <h3 className="font-bold text-foreground">{t('ratings.add')}</h3>
+        <h3 className="font-bold text-foreground">
+          {mode === 'edit' ? t('common.edit') : t('ratings.add')}
+        </h3>
         <button onClick={onClose} className="btn-ghost text-xs">{t('common.cancel')}</button>
       </div>
 
@@ -94,6 +104,17 @@ function RatingCard({ rating }: { rating: RollRating }) {
   const { t, language } = useI18n()
   const { deleteRating, settings } = useStore()
   const [confirm, setConfirm] = useState(false)
+  const [editing, setEditing] = useState(false)
+
+  if (editing) {
+    return (
+      <RatingForm
+        onClose={() => setEditing(false)}
+        initial={rating}
+        mode="edit"
+      />
+    )
+  }
 
   const avgs: number[] = []
   if (rating.user1) avgs.push(ratingAvg(rating.user1))
@@ -132,8 +153,14 @@ function RatingCard({ rating }: { rating: RollRating }) {
         <p className="text-sm text-muted-foreground italic border-t border-border pt-3">"{rating.notes}"</p>
       )}
 
-      {/* Delete */}
-      <div className="flex justify-end pt-1">
+      {/* Edit / Delete */}
+      <div className="flex items-center justify-between pt-1">
+        <button
+          onClick={() => setEditing(true)}
+          className="btn-ghost text-xs text-muted-foreground"
+        >
+          <Pencil size={12} /> {t('common.edit')}
+        </button>
         {confirm ? (
           <div className="flex gap-2">
             <button onClick={() => setConfirm(false)} className="btn-ghost text-xs">{t('common.cancel')}</button>
