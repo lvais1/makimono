@@ -7,7 +7,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  LayoutDashboard, Shuffle, ShoppingCart, Calculator,
+  LayoutDashboard, Shuffle, Bookmark, ShoppingCart, Calculator,
   Star, Zap, BookOpen, Settings,
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/context'
@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils'
 const NAV_ITEMS = [
   { href: '/',               icon: LayoutDashboard, key: 'nav.dashboard' },
   { href: '/roll-generator', icon: Shuffle,          key: 'nav.rollGenerator' },
+  { href: '/saved-rolls',    icon: Bookmark,         key: 'nav.savedRolls' },
   { href: '/shopping-list',  icon: ShoppingCart,     key: 'nav.shoppingList' },
   { href: '/calculator',     icon: Calculator,       key: 'nav.calculator' },
   { href: '/ratings',        icon: Star,             key: 'nav.ratings' },
@@ -25,6 +26,17 @@ const NAV_ITEMS = [
   { href: '/journal',        icon: BookOpen,         key: 'nav.journal' },
   { href: '/settings',       icon: Settings,         key: 'nav.settings' },
 ]
+
+function SidebarFooterStats() {
+  const journal = useStore((s) => s.journal)
+  const totalRolls = journal.reduce((sum, e) => sum + e.rollsMade.filter(Boolean).length, 0)
+  if (!journal.length) return null
+  return (
+    <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.22)', lineHeight: 1.8 }}>
+      {journal.length} evenings · {totalRolls} rolls
+    </div>
+  )
+}
 
 export function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname()
@@ -102,10 +114,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
         style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
       >
         <LanguageSwitcher />
-        <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.22)', lineHeight: 1.8 }}>
-          {/* Replace with real values from your store if available */}
-          23 evenings · 142 rolls
-        </div>
+        <SidebarFooterStats />
       </div>
     </div>
   )

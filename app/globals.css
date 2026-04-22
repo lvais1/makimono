@@ -5,15 +5,57 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Light theme (default) ── */
   :root {
-    /* ── Obsidian Design System ── */
+    --background:  40 20% 97%;
+    --foreground:  250 25% 12%;
+
+    --card:           0 0% 100%;
+    --card-foreground: 250 25% 12%;
+
+    --primary:         20  65% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary:       250 10% 93%;
+    --secondary-foreground: 250 20% 28%;
+
+    --muted:           250 10% 94%;
+    --muted-foreground: 250 10% 45%;
+
+    --accent:          50  58% 52%;
+    --accent-foreground: 250 25% 12%;
+
+    --destructive:     0   72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border:          250 15% 88%;
+    --input:           250 10% 92%;
+    --ring:            20  65% 48%;
+    --radius:          0.75rem;
+
+    --sidebar-bg:      250 25% 14%;
+    --sidebar-fg:      40  10% 78%;
+    --sidebar-border:  250 20% 20%;
+
+    --glass-surface:      rgba(255,255,255,0.80);
+    --glass-border:       rgba(0,0,0,0.08);
+    --glass-border-hover: rgba(0,0,0,0.15);
+    --glow-primary:       rgba(204, 88, 62, 0.18);
+    --glow-accent:        rgba(196,168, 90, 0.14);
+    --blob-primary:       rgba(204, 88, 62, 0.09);
+    --blob-indigo:        rgba( 94, 78,180, 0.07);
+    --blob-teal:          rgba( 80,168,130, 0.06);
+  }
+
+  /* ── Dark / Obsidian theme ── */
+  html.dark {
     --background:  250 35% 9%;
     --foreground:  40  15% 92%;
 
     --card:           250 28% 13%;
     --card-foreground: 40 15% 92%;
 
-    --primary:         20  65% 50%;   /* coral */
+    --primary:         20  65% 50%;
     --primary-foreground: 0  0% 100%;
 
     --secondary:       250 25% 17%;
@@ -22,7 +64,7 @@
     --muted:           250 25% 16%;
     --muted-foreground: 40  8% 55%;
 
-    --accent:          50  58% 70%;   /* gold */
+    --accent:          50  58% 70%;
     --accent-foreground: 250 35% 9%;
 
     --destructive:     0   72% 55%;
@@ -37,7 +79,6 @@
     --sidebar-fg:      40  10% 78%;
     --sidebar-border:  250 30% 13%;
 
-    /* Glass & glow — used outside Tailwind */
     --glass-surface:      rgba(255,255,255,0.055);
     --glass-border:       rgba(255,255,255,0.09);
     --glass-border-hover: rgba(255,255,255,0.16);

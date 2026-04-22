@@ -37,10 +37,12 @@ export function AppLayout({
       language === 'he' ? 'he' : language === 'ru' ? 'ru' : 'en'
   }, [dir, language])
 
-  // Obsidian is always dark — ignore light/dark toggle or map it here
   useEffect(() => {
-    // Design is dark-only; always apply dark class so Tailwind dark: variants work
-    document.documentElement.classList.add('dark')
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
   }, [theme])
 
   if (isStandalone) {

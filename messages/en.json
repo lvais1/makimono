@@ -6,6 +6,7 @@
   "nav": {
     "dashboard": "Dashboard",
     "rollGenerator": "Roll Generator",
+    "savedRolls": "Saved Rolls",
     "shoppingList": "Shopping",
     "calculator": "Calculator",
     "ratings": "Ratings",
@@ -379,6 +380,14 @@
     "of": "of",
     "stars": "stars",
     "more": "More"
+  },
+  "savedRolls": {
+    "title": "Saved Rolls",
+    "subtitle": "Rolls you bookmarked from the generator",
+    "empty": "No saved rolls yet. Generate some rolls and bookmark your favorites!",
+    "goGenerate": "Go to Roll Generator",
+    "toShopping": "Shopping List",
+    "count": "saved rolls"
   },
   "welcome": {
     "title": "Welcome",

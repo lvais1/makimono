@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  LayoutDashboard, Shuffle, ShoppingCart, Calculator,
+  LayoutDashboard, Shuffle, Bookmark, ShoppingCart, Calculator,
   Star, Zap, BookOpen, Settings, Menu, X,
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/context'
@@ -17,6 +17,7 @@ import { Sidebar } from './Sidebar'
 const BOTTOM_NAV = [
   { href: '/',               icon: LayoutDashboard, key: 'nav.dashboard' },
   { href: '/roll-generator', icon: Shuffle,          key: 'nav.rollGenerator' },
+  { href: '/saved-rolls',    icon: Bookmark,         key: 'nav.savedRolls' },
   { href: '/ratings',        icon: Star,             key: 'nav.ratings' },
   { href: '/journal',        icon: BookOpen,         key: 'nav.journal' },
 ]
